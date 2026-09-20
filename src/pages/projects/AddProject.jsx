@@ -128,6 +128,7 @@ const AddProject = () => {
                                 id="title"
                                 name="title"
                                 type="text"
+                                required
                                 value={formik.values.title}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
@@ -144,6 +145,7 @@ const AddProject = () => {
                                 id="subtitle"
                                 name="subtitle"
                                 type="text"
+                                required
                                 value={formik.values.subtitle}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
@@ -162,6 +164,7 @@ const AddProject = () => {
                                         <input
                                             type="text"
                                             value={desc}
+                                            required
                                             onChange={(e) => handleDescriptionChange(index, e.target.value)}
                                             className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-colors"
                                             placeholder={`Point ${index + 1}`}
@@ -247,6 +250,7 @@ const AddProject = () => {
                                     id="github"
                                     name="github"
                                     type="text"
+                                    required
                                     value={formik.values.github}
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
@@ -263,6 +267,7 @@ const AddProject = () => {
                                     id="live"
                                     name="live"
                                     type="text"
+                                    required
                                     value={formik.values.live}
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}

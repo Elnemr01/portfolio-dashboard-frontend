@@ -89,6 +89,7 @@ const AddSkills = () => {
                                 id="skillName"
                                 name="skillName"
                                 type="text"
+                                required
                                 value={formik.values.skillName}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
@@ -103,6 +104,7 @@ const AddSkills = () => {
                             </label>
                             <select
                                 id="catogery"
+                                required
                                 name="catogery"
                                 value={formik.values.catogery}
                                 onChange={formik.handleChange}

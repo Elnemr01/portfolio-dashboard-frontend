@@ -106,6 +106,7 @@ const AddExperience = () => {
                                 id="title"
                                 name="title"
                                 type="text"
+                                required
                                 value={formik.values.title}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
@@ -122,6 +123,7 @@ const AddExperience = () => {
                                 id="subtitle"
                                 name="subtitle"
                                 type="text"
+                                required
                                 value={formik.values.subtitle}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
@@ -138,6 +140,7 @@ const AddExperience = () => {
                                 id="duration"
                                 name="duration"
                                 type="text"
+                                required
                                 value={formik.values.duration}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
@@ -155,6 +158,7 @@ const AddExperience = () => {
                                     <input
                                         id='location'
                                         type="text"
+                                        required
                                         name='location'
                                         placeholder='location'
                                         value={formik.values.location}
@@ -176,6 +180,7 @@ const AddExperience = () => {
                                         <input
                                             type="text"
                                             value={desc}
+                                            required
                                             onChange={(e) => handleDescriptionChange(index, e.target.value)}
                                             className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-colors"
                                             placeholder={`Point ${index + 1}`}
