@@ -3,19 +3,21 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import client from '@/api/axios'
 import toast from 'react-hot-toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 
 const AddProject = () => {
     const navigate = useNavigate();
     const location = useLocation();
+
+    const [page,setPage]=useState(1);
 
     const id = location.state?.id;
     const data = location.state?.data;
     const edit = location.state?.edit;
 
     const { data: skillsList, isLoading: skillsLoading } = useQuery({
-        queryKey: ['skills'],
-        queryFn: async () => await client.get('/api/skills').then(res => res.data),
+        queryKey: ['skills', page],
+        queryFn: async () => await client.get(`/api/skills?page=${page}`).then(res => res.data),
     })
 
 
@@ -219,25 +221,39 @@ const AddProject = () => {
                             {skillsLoading ? (
                                 <p className="text-sm text-gray-500">Loading skills...</p>
                             ) : (
-                                <div className="flex flex-wrap gap-2">
-                                    {skillsList?.data?.skills.map((skill) => {
-                                        const selected = formik.values.skills.includes(skill._id);
-                                        return (
-                                            <button
-                                                type="button"
-                                                key={skill._id}
-                                                onClick={() => toggleSkill(skill._id)}
-                                                className={`px-3 py-1.5 rounded-full text-sm font-medium border transition-colors ${
-                                                    selected
-                                                        ? 'bg-indigo-600 text-white border-indigo-600'
-                                                        : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
-                                                }`}
-                                            >
-                                                {skill.skillName}
-                                            </button>
-                                        )
-                                    })}
-                                </div>
+                                <>
+                                    <div className="flex flex-wrap gap-2">
+                                        {skillsList?.data?.skills.map((skill) => {
+                                            const selected = formik.values.skills.includes(skill._id);
+                                            return (
+                                                <button
+                                                    type="button"
+                                                    key={skill._id}
+                                                    onClick={() => toggleSkill(skill._id)}
+                                                    className={`px-3 py-1.5 rounded-full text-sm font-medium border transition-colors ${
+                                                        selected
+                                                            ? 'bg-indigo-600 text-white border-indigo-600'
+                                                            : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                                                    }`}
+                                                >
+                                                    {skill.skillName}
+                                                </button>
+                                            )
+                                        })}
+                                    </div>
+                                    <div className="butns flex justify-between mt-2 ">
+                                        {<button onClick={()=> setPage(old => old-1)} type="button" 
+                                            className={`text-white bg-indigo-600 w-fit p-4 rounded-full py-2  ${page <= 1 ? 'opacity-50 cursor-not-allowed pointer-events-none' : 'cursor-pointer'}`}>
+                                            previous
+                                        </button> }
+                                        { <button 
+                                        className={`text-white bg-indigo-600 w-fit p-4 rounded-full py-2
+                                            ${skillsList?.data?.skills.length == 0 ?'opacity-50 cursor-not-allowed pointer-events-none' : 'cursor-pointer'}`}
+                                        onClick={()=> setPage(old => old+1)} type="button">
+                                            next
+                                        </button>}
+                                    </div>
+                                </>
                             )}
                         </div>
 
@@ -250,7 +266,6 @@ const AddProject = () => {
                                     id="github"
                                     name="github"
                                     type="text"
-                                    required
                                     value={formik.values.github}
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
@@ -267,7 +282,6 @@ const AddProject = () => {
                                     id="live"
                                     name="live"
                                     type="text"
-                                    required
                                     value={formik.values.live}
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
