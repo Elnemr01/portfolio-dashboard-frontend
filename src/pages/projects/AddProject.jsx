@@ -4,6 +4,7 @@ import client from '@/api/axios'
 import toast from 'react-hot-toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
+import Pagination from '@/components/pagination/Pagination'
 
 const AddProject = () => {
     const navigate = useNavigate();
@@ -241,18 +242,7 @@ const AddProject = () => {
                                             )
                                         })}
                                     </div>
-                                    <div className="butns flex justify-between mt-2 ">
-                                        {<button onClick={()=> setPage(old => old-1)} type="button" 
-                                            className={`text-white bg-indigo-600 w-fit p-4 rounded-full py-2  ${page <= 1 ? 'opacity-50 cursor-not-allowed pointer-events-none' : 'cursor-pointer'}`}>
-                                            previous
-                                        </button> }
-                                        { <button 
-                                        className={`text-white bg-indigo-600 w-fit p-4 rounded-full py-2
-                                            ${skillsList?.data?.skills.length == 0 ?'opacity-50 cursor-not-allowed pointer-events-none' : 'cursor-pointer'}`}
-                                        onClick={()=> setPage(old => old+1)} type="button">
-                                            next
-                                        </button>}
-                                    </div>
+                                    <Pagination response={skillsList} page={page} setFun={setPage} name="skills"/>
                                 </>
                             )}
                         </div>

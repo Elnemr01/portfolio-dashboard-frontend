@@ -1,14 +1,15 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import client from '@/api/axios'
 import toast from 'react-hot-toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import Pagination from '@/components/pagination/Pagination'
 
 const Experiences = () => {
-
+    const [page,setPage]= useState(1);
     const { data: experiences, isLoading, isError } = useQuery({
-        queryKey: ['experiences'],
-        queryFn: async () => await client.get('/api/experiences').then(res => res.data),
+        queryKey: ['experiences',page],
+        queryFn: async () => await client.get(`/api/experiences?page=${page}`).then(res => res.data),
     })
 
     // delete experience
@@ -103,6 +104,7 @@ const Experiences = () => {
                             </div>
                         ))}
                     </div>
+                    <Pagination page={page} setFun={setPage} response={experiences} name="experiences" />
                 </div>
             </div>
         </div>

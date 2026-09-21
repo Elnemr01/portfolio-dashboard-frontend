@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom'
 import client from '@/api/axios'
 import toast from 'react-hot-toast'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import Pagination from '@/components/pagination/Pagination'
 
 const Skills = () => {
     
-
+    const [page, setPage] = useState(1)
     const {data: skills ,isLoading, isError}=useQuery({
-        queryKey: ['skills'],
-        queryFn: async () => await client.get('/api/skills').then(res => res.data),
+        queryKey: ['skills',page],
+        queryFn: async () => await client.get(`/api/skills?page=${page}`).then(res => res.data),
     })
 
     // delete skill
@@ -92,6 +93,7 @@ const Skills = () => {
                                     </div>
                                 ))}
                             </div>
+                            <Pagination response={skills} page={page} setFun={setPage} name="skills"/>
                         </>
                 </div>
             </div>
