@@ -9,7 +9,7 @@ const Pagination = ({response, page,setFun,name}) => {
             </button> }
             { <button 
             className={`text-white bg-indigo-600 w-fit p-4 rounded-full py-2
-                ${response?.data?.[name].length == 0 ?'opacity-50 cursor-not-allowed pointer-events-none' : 'cursor-pointer'}`}
+                ${response?.data?.page * response?.data?.limit >= response?.data?.total ?'opacity-50 cursor-not-allowed pointer-events-none' : 'cursor-pointer'}`}
             onClick={()=> setFun(old => old+1)} type="button">
                 next
             </button>}
